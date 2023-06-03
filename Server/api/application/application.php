@@ -1,36 +1,32 @@
 <?php
 
-require("user/User.php");
-require("db/DB.php");
-require("./cache/Cache.php");
+require('Db/db.php');
+require('User/user.php');
 
-class Application {
+class Application
+{
     function __construct()
     {
-        $config = json_decode(file_get_contents('./config/config.json'), true);
-        //$cache = new Cache($config["Cache"]);
-        //$db = new DB($config["DataBase"], $cache);
-        //$cache->addDB($db);
-        //$this->user = new User($db);
-
+        $config = json_decode(file_get_contents('./Config/config.json'), true);
+        $db = new DB($config["DataBase"]);
+        $this->user = new User($db);
     }
 
 
-
-
     //функция проверки полученных значений в запросе
-    private function checkParams($params){
-        foreach($params as $param=>$value){
-            if($param == 'token' && (!is_string($value) || strlen($value) != 32)){
+    private function checkParams($params)
+    {
+        foreach ($params as $param => $value) {
+            if ($param == 'token' && (!is_string($value) || strlen($value) != 32)) {
                 return false;
             }
-            if($param == 'login' && (!is_string($value) || strlen($value) > 16 )){
+            if ($param == 'login' && (!is_string($value) || strlen($value) > 16)) {
                 return false;
             }
-            if($param == 'password' && (!is_string($value) && strlen($value) > 16)){
+            if ($param == 'password' && (!is_string($value) && strlen($value) > 16)) {
                 return false;
             }
-            if($param == 'name' && (!is_string($value) || strlen($value) > 16)){
+            if ($param == 'name' && (!is_string($value) || strlen($value) > 16)) {
                 return false;
             }
         }
@@ -41,7 +37,7 @@ class Application {
     //////////////forUser///////////////////
     ////////////////////////////////////////
 
-    /*public function login($params) {
+    public function login($params) {
         if ($this->checkParams($params)) {
             if ($params['login'] && $params['password']) {
                 return $this->user->login($params['login'], $params['password']);
@@ -71,5 +67,5 @@ class Application {
         }
     }
     
-    */
+    
 }

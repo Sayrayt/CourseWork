@@ -1,7 +1,6 @@
 <?php
 require("application/Application.php");
 
-
 function router($params) {
     $method = $params['method'];
     if ($method) {
@@ -11,11 +10,12 @@ function router($params) {
             //////////
             // USER //
             //////////
-            /*
+            
             case 'login': return $app->login($params);
             case 'logout': return $app->logout($params);
             case 'registration': return $app->registration($params);
-            */
+            
+            
         }
     }
     return false;
