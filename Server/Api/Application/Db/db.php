@@ -88,6 +88,11 @@ public function getUserByToken($token) {
     return $this->protectQuery($query,[$token])->fetchObject();
 }
 
+public function getUserById($user_id) {
+    $query = 'SELECT * FROM users WHERE user_id=?';
+    return $this->protectQuery($query,[$user_id])->fetchObject();
+}
+
 public function getLoggedUsers() {
     $query = '
         SELECT id,name 
@@ -104,5 +109,26 @@ public function addUser($login, $password, $name) {
 public function updateToken($id, $token) {
     return $this->simpleUpdateById('users', 'token', $token, $id);
 }
+
+////////////////////////////////////////
+//////////////forFilm///////////////////
+////////////////////////////////////////
+/*
+/*public function getWathedMovies($film_id,$user_id) {
+    $query = 'SELECT * FROM movies_wathed WHERE film_id=? AND user_id=?';
+    return $this->protectQuery($query,[$film_id,$user_id])->fetchObject();
+}
+
+public function watch_movie($user_id, $film_id) {
+    $query = 'INSERT INTO movies_watched (user_id, film_id) VALUES (?,?,?)';
+    return $this->protectQuery($query,[$user_id, $film_id])->fetchObject();
+}
+
+public function getFilm($film_id) {
+    $query = 'SELECT * FROM films WHERE film_id=?';
+    return $this->protectQuery($query,[$film_id])->fetchObject();
+}
+
+*/
 
 }

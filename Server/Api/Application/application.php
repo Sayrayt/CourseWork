@@ -2,6 +2,7 @@
 
 require('Db/db.php');
 require('User/user.php');
+require('Film/film.php');
 
 class Application
 {
@@ -10,6 +11,7 @@ class Application
         $config = json_decode(file_get_contents('./Config/config.json'), true);
         $db = new DB($config["DataBase"]);
         $this->user = new User($db);
+        $this->film = new Film($db);
     }
 
 
@@ -29,6 +31,9 @@ class Application
             if ($param == 'name' && (!is_string($value) || strlen($value) > 16)) {
                 return false;
             }
+            if ($param == 'film_id' && (!is_int($value))) {
+                return false;
+            }
         }
         return true;
     }
@@ -37,7 +42,8 @@ class Application
     //////////////forUser///////////////////
     ////////////////////////////////////////
 
-    public function login($params) {
+    public function login($params)
+    {
         if ($this->checkParams($params)) {
             if ($params['login'] && $params['password']) {
                 return $this->user->login($params['login'], $params['password']);
@@ -45,7 +51,8 @@ class Application
         }
     }
 
-    public function registration($params) {
+    public function registration($params)
+    {
         if ($this->checkParams($params)) {
             [
                 'login' => $login,
@@ -58,7 +65,8 @@ class Application
         }
     }
 
-    public function logout($params) {
+    public function logout($params)
+    {
         if ($this->checkParams($params)) {
             $user = $this->user->getUser($params['token']);
             if ($user) {
@@ -66,6 +74,17 @@ class Application
             }
         }
     }
-    
-    
+
+    ////////////////////////////////////////
+    //////////////forFilm///////////////////
+    ////////////////////////////////////////
+
+    public function watch_movie($params)
+    {
+        [
+            'film_id' => $film_id,
+            'user_id' => $user_id,
+        ] = $params;
+        return $this->film->watch_movie($film_id, $user_id);
+    }
 }
