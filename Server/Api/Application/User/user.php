@@ -49,4 +49,14 @@ class User
             return $this->db->getUserByToken($token);
         }
     }
+
+    function getUserOptions($user_id){
+        if ($user_id) {
+            return $this->db->getUserOptionsById($user_id);
+        }
+    }
+
+    function addUserOptions($user_id, $status, $personal_information, $country, $avatar){
+        return $this->db->addUserOptions($user_id, $status, $personal_information, $country, $avatar);
+    }
 }

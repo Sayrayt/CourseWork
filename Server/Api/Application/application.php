@@ -75,16 +75,67 @@ class Application
         }
     }
 
+    public function getUserOptions($params)
+    {
+        return $this->user->getUserOptions($params['id']);
+    }
+
+    public function addUserOptions($params)
+    {
+        [
+            'user_id' => $user_id,
+            'status' => $status,
+            'personal_information' => $personal_information,
+            'country' => $country,
+            'avatar' => $avatar,
+        ] = $params;
+        return $this->user->addUserOptions($user_id, $status, $personal_information, $country, $avatar);
+    }
+
+    public function getUserOptions($params)
+    {
+        
+        return $this->user->getUserOptions($params['user_id']);
+    }
+
     ////////////////////////////////////////
     //////////////forFilm///////////////////
     ////////////////////////////////////////
 
-    public function watch_movie($params)
+    public function addWatchedMovie($params)
     {
         [
             'film_id' => $film_id,
             'user_id' => $user_id,
         ] = $params;
-        return $this->film->watch_movie($film_id, $user_id);
+        
+        return $this->film->addWatchedMovie($film_id, $user_id);
+    }
+
+    
+
+    public function addToBookmarks($params)
+    {
+        [
+            'film_id' => $film_id,
+            'user_id' => $user_id,
+        ] = $params;
+        return $this->film->addToBookmarks($film_id, $user_id);
+    }
+
+    public function addReview($params)
+    {
+        [
+            'film_id' => $film_id,
+            'user_id' => $user_id,
+            'review' => $review,
+            'rating' => $rating,
+        ] = $params;
+        return $this->film->addReview($film_id, $user_id, $review, $rating);
+    }
+
+    public function getWatchedMovie($params)
+    {
+        return $this->film->getWatchedMovie($params['user_id']);
     }
 }
